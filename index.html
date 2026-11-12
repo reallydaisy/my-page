@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍰 양준희의 스위트 디저트 카페</title>
+    <!-- 둥글둥글하고 귀여운 한글 폰트 (Jua & Gowun Dodum) 불러오기 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    <style>
+        /* CSS 변수 설정: 라이트 모드 (파스텔 디저트 카페 테마) */
+        :root {
+            --bg-color: #FFF5F7;
+            --bg-pattern: #FFE4E9;
+            --card-bg: #FFFFFF;
+            --card-back-bg: #FFF0F5;
+            --text-main: #5D4037;
+            --text-sub: #8D6E63;
+            --accent-pink: #FF8FA3;
+            --accent-pink-hover: #FF758F;
+            --accent-mint: #A8E6CF;
+            --accent-yellow: #FFD3B6;
+            --accent-lavender: #E0BBE4;
+            --border-color: #FFD1DC;
+            --shadow: 0 10px 25px rgba(255, 143, 163, 0.2);
+            --btn-text: #FFFFFF;
+        }
+
+        /* 다크 모드 (달콤한 초콜릿 & 미드나잇 베이커리 테마) */
+        body.dark-mode {
+            --bg-color: #2A1E24;
+            --bg-pattern: #36262E;
+            --card-bg: #3D2B33;
+            --card-back-bg: #4A343E;
+            --text-main: #FCE4EC;
+            --text-sub: #D7CCC8;
+            --accent-pink: #F48FB1;
+            --accent-pink-hover: #F06292;
+            --accent-mint: #80CBC4;
+            --accent-yellow: #FFCC80;
+            --accent-lavender: #CE93D8;
+            --border-color: #5C404C;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+            --btn-text: #2A1E24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Gowun Dodum', sans-serif;
+            background-color: var(--bg-color);
+            /* 귀여운 도트 패턴 배경 */
+            background-image: radial-gradient(var(--bg-pattern) 2px, transparent 2px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            padding-bottom: 60px;
+        }
+
+        h1, h2, h3, .badge, button {
+            font-family: 'Jua', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* 상단 네비게이션 & 테마 토글 버튼 */
+        header {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cafe-sign {
+            background-color: var(--card-bg);
+            border: 2px dashed var(--accent-pink);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            color: var(--accent-pink);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 2px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 메인 컨테이너 */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* 공통 섹션 카드 스타일 */
+        .dessert-box {
+            background-color: var(--card-bg);
+            border: 3px solid var(--border-color);
+            border-radius: 28px;
+            padding: 28px 22px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* 프로필 배너 섹션 */
+        .profile-section {
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-back-bg) 100%);
+            padding-top: 36px;
+        }
+
+        .awning-decor {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-pink);
+            color: var(--btn-text);
+            padding: 4px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 10px rgba(255, 143, 163, 0.4);
+            white-space: nowrap;
+        }
+
+        .avatar-circle {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 16px;
+            background-color: var(--accent-yellow);
+            border: 4px solid var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .profile-title {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .highlight-name {
+            color: var(--accent-pink);
+            text-decoration: underline wavy var(--accent-mint);
+            text-underline-offset: 6px;
+        }
+
+        .profile-desc {
+            font-size: 1.05rem;
+            color: var(--text-sub);
+            max-width: 500px;
+            margin: 0 auto 16px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tag {
+            background-color: var(--bg-color);
+            border: 1.5px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        /* 섹션 제목 */
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 22px;
+        }
+
+        /* 좋아하는 것 3가지 플립 카드 그리드 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 680px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+        }
+
+        .flip-card {
+            background-color: transparent;
+            height: 240px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 24px;
+            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2.5px solid var(--border-color);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+        }
+
+        .flip-card-front {
+            background-color: var(--bg-color);
+        }
+
+        .flip-card:nth-child(1) .flip-card-front { border-color: #FF8FA3; }
+        .flip-card:nth-child(2) .flip-card-front { border-color: #A8E6CF; }
+        .flip-card:nth-child(3) .flip-card-front { border-color: #FFD3B6; }
+
+        .card-emoji {
+            font-size: 3.6rem;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .flip-card:hover .card-emoji {
+            transform: scale(1.12) rotate(5deg);
+        }
+
+        .card-keyword {
+            font-size: 1.45rem;
+            font-family: 'Jua', sans-serif;
+            margin-bottom: 6px;
+        }
+
+        .tap-hint {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            background-color: var(--card-bg);
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-top: 6px;
+        }
+
+        .flip-card-back {
+            background-color: var(--card-back-bg);
+            transform: rotateY(180deg);
+            justify-content: space-between;
+            padding: 22px 16px;
+        }
+
+        .back-title {
+            font-family: 'Jua', sans-serif;
+            font-size: 1.15rem;
+            color: var(--accent-pink);
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 6px;
+            width: 100%;
+        }
+
+        .back-reason {
+            font-size: 0.96rem;
+            line-height: 1.5;
+            word-break: keep-all;
+            margin: auto 0;
+        }
+
+        /* OX 퀴즈 섹션 */
+        .quiz-question-box {
+            background-color: var(--bg-color);
+            border: 2px dashed var(--accent-lavender);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-q-text {
+            font-family: 'Jua', sans-serif;
+            font-size: 1.65rem;
+            color: var(--text-main);
+        }
+
+        .ox-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .ox-btn {
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
+            border: none;
+            font-size: 3rem;
+            cursor: pointer;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ox-btn span {
+            font-size: 0.9rem;
+            margin-top: -4px;
+        }
+
+        .btn-o {
+            background-color: #A8E6CF;
+            color: #1B5E20;
+        }
+
+        .btn-x {
+            background-color: #FF8FA3;
+            color: #880E4F;
+        }
+
+        .ox-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+        }
+
+        .quiz-feedback {
+            min-height: 70px;
+            border-radius: 18px;
+            padding: 14px;
+            font-size: 1.05rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .quiz-feedback.correct {
+            display: flex;
+            background-color: rgba(168, 230, 207, 0.35);
+            border: 2px solid #81C784;
+            color: var(--text-main);
+        }
+
+        .quiz-feedback.wrong {
+            display: flex;
+            background-color: rgba(255, 143, 163, 0.25);
+            border: 2px solid #E57373;
+            color: var(--text-main);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* 오늘의 운세 섹션 */
+        .fortune-cookie-area {
+            margin: 10px 0 20px;
+        }
+
+        .fortune-btn {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, #FFB3C1 100%);
+            color: #FFFFFF;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 143, 163, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fortune-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(255, 143, 163, 0.5);
+        }
+
+        .fortune-btn:active {
+            transform: scale(0.96);
+        }
+
+        .fortune-result-card {
+            background-color: var(--bg-color);
+            border: 2.5px solid var(--accent-yellow);
+            border-radius: 22px;
+            padding: 22px 18px;
+            margin-top: 18px;
+            display: none;
+            animation: popIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .fortune-result-card.show {
+            display: block;
+        }
+
+        .fortune-dessert-badge {
+            display: inline-block;
+            background-color: var(--accent-yellow);
+            color: #5D4037;
+            padding: 4px 14px;
+            border-radius: 15px;
+            font-family: 'Jua', sans-serif;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+
+        .fortune-text {
+            font-size: 1.12rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            word-break: keep-all;
+        }
+
+        .fortune-lucky-item {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+
+        /* 효과용 풀스크린 캔버스 (폭죽 & 비 효과) */
+        #effectCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 축하/아쉬움 파티클 효과를 그릴 캔버스 -->
+    <canvas id="effectCanvas"></canvas>
+
+    <!-- 상단 헤더 -->
+    <header>
+        <div class="cafe-sign">
+            <span>🧁</span>
+            <span>JUNHEE'S CAFE</span>
+        </div>
+        <button id="themeToggle" class="theme-toggle-btn" aria-label="화면 테마 변경">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">어두운 화면</span>
+        </button>
+    </header>
+
+    <main>
+        <!-- 1. 프로필 소개 영역 -->
+        <section class="dessert-box profile-section">
+            <div class="awning-decor">🎀 오늘도 달콤하게 오픈했습니다! 🎀</div>
+            <div class="avatar-circle" role="img" aria-label="딸기 케이크 아바타">🍰</div>
+            <h1 class="profile-title">안녕! 나는 <span class="highlight-name">양준희</span>야!</h1>
+            <p class="profile-desc">
+                달콤한 파스텔 톤 디저트 가게처럼 기분 좋은 에너지를 뿜뿜하는 중! ✨<br>
+                내 취향이 가득 담긴 비밀 레시피들을 하나씩 구경해 볼래?
+            </p>
+            <div class="tag-list">
+                <span class="tag">#파스텔감성</span>
+                <span class="tag">#엔믹스사랑해</span>
+                <span class="tag">#이불밖은위험해</span>
+                <span class="tag">#밥심이최고</span>
+            </div>
+        </section>
+
+        <!-- 2. 좋아하는 것 3가지 (플립 카드) -->
+        <section class="dessert-box">
+            <h2 class="section-title">🍓 양준희의 최애 메뉴 TOP 3</h2>
+            <p class="section-subtitle">카드를 톡! 눌러서 뒤집어 봐! 비밀 이유가 숨어있어 👀</p>
+
+            <div class="cards-grid">
+                <!-- 카드 1: 엔믹스 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-emoji">🎤</div>
+                            <div class="card-keyword">엔믹스 (NMIXX)</div>
+                            <div class="tap-hint">터치해서 뒤집기 ↻</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="back-title">💖 엔믹스가 좋은 이유</div>
+                            <p class="back-reason">
+                                내 심장 박동수는 엔믹스 노래 비트에 맞춰 뛰거든! 믹스팝 한 입이면 피로가 눈 녹듯 사라지는 마법의 디저트야! 🐬✨
+                            </p>
+                            <div class="tap-hint">다시 누르면 앞면 ↺</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 2: 잠 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-emoji">🛌</div>
+                            <div class="card-keyword">달콤한 잠</div>
+                            <div class="tap-hint">터치해서 뒤집기 ↻</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="back-title">💤 잠이 좋은 이유</div>
+                            <p class="back-reason">
+                                포근한 이불 속은 세상에서 제일 안전한 솜사탕 성이야! 눈 감았다 뜨면 내일이 와 있는 순간이동 초능력자라구~ 🌙☁️
+                            </p>
+                            <div class="tap-hint">다시 누르면 앞면 ↺</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카드 3: 밥 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="card-emoji">🍚</div>
+                            <div class="card-keyword">맛있는 밥</div>
+                            <div class="tap-hint">터치해서 뒤집기 ↻</div>
+                        </div>
+                        <div class="flip-card-back">
+                            <div class="back-title">🥄 밥이 좋은 이유</div>
+                            <p class="back-reason">
+                                한국인은 역시 밥심! 맛있는 밥 한 그릇 뚝딱 비워야 엔믹스 응원할 힘도 나고, 꿀잠 잘 에너지도 충전되니까! 🍱🔥
+                            </p>
+                            <div class="tap-hint">다시 누르면 앞면 ↺</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. OX 퀴즈 섹션 -->
+        <section class="dessert-box">
+            <h2 class="section-title">🎯 깜짝 OX 퀴즈 타임!</h2>
+            <p class="section-subtitle">과연 너는 양준희에 대해 얼마나 잘 알고 있을까?</p>
+
+            <div class="quiz-question-box">
+                <div class="quiz-q-text">Q. "나는 엔써(NSWER)다!"</div>
+            </div>
+
+            <div class="ox-buttons">
+                <button class="ox-btn btn-o" onclick="checkQuiz(true)">
+                    O
+                    <span>맞아!</span>
+                </button>
+                <button class="ox-btn btn-x" onclick="checkQuiz(false)">
+                    X
+                    <span>아니야!</span>
+                </button>
+            </div>
+
+            <div id="quizFeedback" class="quiz-feedback" role="alert"></div>
+        </section>
+
+        <!-- 4. 오늘의 운세 뽑기 섹션 -->
+        <section class="dessert-box">
+            <h2 class="section-title">🥠 오늘의 디저트 운세 뽑기</h2>
+            <p class="section-subtitle">버튼을 누르면 달콤한 오늘의 운세가 랜덤으로 나와요!</p>
+
+            <div class="fortune-cookie-area">
+                <button class="fortune-btn" onclick="pickFortune()">
+                    <span>✨</span>
+                    <span>오늘의 운세 뽑기!</span>
+                    <span>✨</span>
+                </button>
+            </div>
+
+            <div id="fortuneResult" class="fortune-result-card">
+                <div id="fortuneDessert" class="fortune-dessert-badge">🍓 딸기 마카롱 운세</div>
+                <p id="fortuneMessage" class="fortune-text"></p>
+                <p id="fortuneLucky" class="fortune-lucky-item"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🧁 Made with sweet energy by 양준희 🧁</p>
+    </footer>
+
+    <script>
+        /* ==========================================
+           1. 다크 모드 / 라이트 모드 전환 기능
+           ========================================== */
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            if (isDark) {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = '밝은 화면';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = '어두운 화면';
+            }
+        });
+
+        /* ==========================================
+           2. OX 퀴즈 및 축하/아쉬움 캔버스 애니메이션
+           ========================================== */
+        const canvas = document.getElementById('effectCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId = null;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function checkQuiz(userAnswer) {
+            const feedbackEl = document.getElementById('quizFeedback');
+            feedbackEl.className = 'quiz-feedback'; // 클래스 초기화
+            
+            // 리플로우 강제 발생으로 애니메이션 재실행
+            void feedbackEl.offsetWidth;
+
+            if (userAnswer === true) {
+                // 정답 (O) -> 축하 효과
+                feedbackEl.classList.add('correct');
+                feedbackEl.innerHTML = `
+                    <strong style="font-size: 1.25rem;">🎉 딩동댕! 완벽한 정답이야! 🎉</strong>
+                    <span>역시 나를 잘 아는구나! 엔믹스와 함께라면 언제나 믹스업(MIXX UP)! 🐬💖</span>
+                `;
+                launchCelebration();
+            } else {
+                // 오답 (X) -> 아쉬운 효과
+                feedbackEl.classList.add('wrong');
+                feedbackEl.innerHTML = `
+                    <strong style="font-size: 1.25rem;">💦 땡! 아쉽지만 틀렸어~ 💦</strong>
+                    <span>힌트: 좋아하는 것 1번 카드를 다시 확인해 봐! 정답은 바로 O! 🥺</span>
+                `;
+                launchSadEffect();
+            }
+        }
+
+        // 축하 폭죽 파티클 생성
+        function launchCelebration() {
+            particles = [];
+            const emojis = ['🎉', '💖', '✨', '🍰', '🐬', '🌸', '🍭'];
+            for (let i = 0; i < 65; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2 + 50,
+                    vx: (Math.random() - 0.5) * 16,
+                    vy: (Math.random() - 0.8) * 16,
+                    gravity: 0.35,
+                    emoji: emojis[Math.floor(Math.random() * emojis.length)],
+                    size: Math.random() * 16 + 18,
+                    alpha: 1,
+                    rotation: Math.random() * 360,
+                    vRot: (Math.random() - 0.5) * 10
+                });
+            }
+            if (!animationId) animateParticles();
+        }
+
+        // 아쉬움 눈물/비 파티클 생성
+        function launchSadEffect() {
+            particles = [];
+            const emojis = ['💧', '☁️', '🥺', '💦'];
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: -30 - Math.random() * 150,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: Math.random() * 5 + 4,
+                    gravity: 0.1,
+                    emoji: emojis[Math.floor(Math.random() * emojis.length)],
+                    size: Math.random() * 14 + 18,
+                    alpha: 1,
+                    rotation: 0,
+                    vRot: 0
+                });
+            }
+            if (!animationId) animateParticles();
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += p.gravity;
+                p.rotation += p.vRot;
+                p.alpha -= 0.012;
+
+                if (p.alpha <= 0 || p.y > canvas.height + 50) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, p.alpha);
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.font = `${p.size}px sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(p.emoji, 0, 0);
+                ctx.restore();
+            }
+
+            if (particles.length > 0) {
+                animationId = requestAnimationFrame(animateParticles);
+            } else {
+                animationId = null;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        /* ==========================================
+           3. 오늘의 운세 (12가지 디저트 테마 운세)
+           ========================================== */
+        const fortunes = [
+            {
+                dessert: "🍓 딸기 생크림 케이크 운세",
+                message: "오늘은 달콤한 행운이 케이크 위의 딸기처럼 톡! 올라오는 날이야. 기분 좋은 칭찬을 듣게 될 거야!",
+                lucky: "행운의 아이템: 핑크색 소품 & 신나는 아이돌 노래"
+            },
+            {
+                dessert: "🥐 바삭바삭 크루아상 운세",
+                message: "겹겹이 쌓인 크루아상처럼 작은 행복들이 차곡차곡 모이는 하루! 고민하던 일이 술술 풀릴 예감이야.",
+                lucky: "행운의 아이템: 따뜻한 우유 한 잔"
+            },
+            {
+                dessert: "🍨 민트초코 아이스크림 운세",
+                message: "상쾌하고 톡톡 튀는 아이디어가 샘솟는 날! 네 매력을 마음껏 보여주면 모두가 너에게 반할 거야.",
+                lucky: "행운의 아이템: 민트색 포인트 아이템"
+            },
+            {
+                dessert: "🍮 탱글탱글 커스터드 푸딩 운세",
+                message: "푸딩처럼 부드럽고 유연하게 하루를 보낼 수 있어! 주변 친구들과 웃음꽃이 활짝 피어날 거야.",
+                lucky: "행운의 아이템: 달달한 간식 하나"
+            },
+            {
+                dessert: "🍩 무지개 스프링클 도넛 운세",
+                message: "동글동글 원만한 하루! 친구와 사소한 오해가 있었다면 오늘 눈 녹듯 사라지고 더 친해질 거야.",
+                lucky: "행운의 아이템: 동그란 거울이나 배지"
+            },
+            {
+                dessert: "🍪 갓 구운 초코칩 쿠키 운세",
+                message: "집중력이 최고조에 달하는 날! 해야 할 일을 빛의 속도로 끝내고 꿀 같은 휴식을 즐길 수 있어.",
+                lucky: "행운의 아이템: 좋아하는 노래 플레이리스트"
+            },
+            {
+                dessert: "🍑 복숭아 타르트 운세",
+                message: "상큼한 복숭아처럼 기분 좋은 소식이 날아올 거야! 오늘 하루는 너 자신이 주인공이라는 걸 잊지 마.",
+                lucky: "행운의 아이템: 향기로운 핸드크림"
+            },
+            {
+                dessert: "🧇 메이플 시럽 와플 운세",
+                message: "밥심이 최고로 발휘되는 날! 맛있는 점심 메뉴 덕분에 오후 내내 에너지가 200% 충전될 거야.",
+                lucky: "행운의 아이템: 든든한 한 끼 식사"
+            },
+            {
+                dessert: "☁️ 구름 솜사탕 운세",
+                message: "구름 위를 걷는 것처럼 마음이 편안하고 포근한 하루! 오늘 밤에는 역대급 꿀잠을 예약했어.",
+                lucky: "행운의 아이템: 폭신폭신한 쿠션이나 인형"
+            },
+            {
+                dessert: "🍋 레몬 마들렌 운세",
+                message: "상큼한 레몬 향처럼 지루했던 일상에 짜릿한 반전이 찾아와! 새로운 도전을 해보기 딱 좋은 날이야.",
+                lucky: "행운의 아이템: 노란색 필기구"
+            },
+            {
+                dessert: "🍫 생초콜릿 파베 운세",
+                message: "진하고 깊은 감동이 있는 하루! 고마운 사람에게 작은 응원의 한마디를 건네면 두 배로 돌아올 거야.",
+                lucky: "행운의 아이템: 손글씨 메모지"
+            },
+            {
+                dessert: "🧁 블루베리 머핀 운세",
+                message: "우연히 들른 곳에서 뜻밖의 행운을 발견하게 돼! 오늘 하루는 호기심 레이더를 활짝 켜두자!",
+                lucky: "행운의 아이템: 보라색 양말 또는 키링"
+            }
+        ];
+
+        let lastFortuneIndex = -1;
+
+        function pickFortune() {
+            let randomIndex;
+            // 연속으로 같은 운세가 나오지 않도록 처리
+            do {
+                randomIndex = Math.floor(Math.random() * fortunes.length);
+            } while (randomIndex === lastFortuneIndex && fortunes.length > 1);
+            
+            lastFortuneIndex = randomIndex;
+            const selected = fortunes[randomIndex];
+
+            const resultCard = document.getElementById('fortuneResult');
+            const dessertBadge = document.getElementById('fortuneDessert');
+            const messageEl = document.getElementById('fortuneMessage');
+            const luckyEl = document.getElementById('fortuneLucky');
+
+            // 애니메이션 재실행을 위해 클래스 잠시 제거
+            resultCard.classList.remove('show');
+            void resultCard.offsetWidth;
+
+            dessertBadge.textContent = selected.dessert;
+            messageEl.textContent = `"${selected.message}"`;
+            luckyEl.textContent = `🍀 ${selected.lucky}`;
+
+            resultCard.classList.add('show');
+        }
+    </script>
+</body>
+</html>
